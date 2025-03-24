@@ -1,18 +1,18 @@
+import { ObjectId } from "mongodb";
+
 export class Product {
+    private _id?: ObjectId;
     private uuid: string;
     private name: string;
     private price: number;
     private quantity: number;
 
-    constructor(uuid: string, name: string, price: number, quantity: number) {
+    constructor(uuid: string, name: string, price: number, quantity: number, _id?: ObjectId) {
         this.uuid = uuid;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-    }
-
-    setId(newUuid: string): void {
-        this.uuid = newUuid;
+        this._id = _id;
     }
 
     setName(newName: string): void {
@@ -41,5 +41,9 @@ export class Product {
 
     getQuantity(): number {
         return this.quantity;
+    }
+
+    getId(): ObjectId | undefined {
+        return this._id;
     }
 }

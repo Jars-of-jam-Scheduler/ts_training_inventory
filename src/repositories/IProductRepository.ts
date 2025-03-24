@@ -1,8 +1,8 @@
 import { Product } from "../models/Product";
 
 export interface IProductRepository {
-    getProducts(): Array<Product>,
-    addProduct(product: Product): void,
-    updateProduct(uuid: string, quantity: number): void,
-    findProductByName(name: string): Product | undefined
+    getProducts(): Promise<Array<Product>>,
+    addProduct(product: Product): Promise<void>,
+    updateProduct(uuid: string, quantity: number): Promise<void>,
+    findProductByName(name: string): Promise<Product | undefined>
 }

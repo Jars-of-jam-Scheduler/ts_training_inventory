@@ -1,29 +1,30 @@
 import { Product } from "../models/Product";
 import { IProductRepository } from "../repositories/IProductRepository";
 import { v4 as uuidv4 } from 'uuid';
+import { inject, injectable } from "tsyringe";
 
+@injectable()
 export class WarehouseService {
-    private productRepository: IProductRepository;
-
-    constructor(productRepository: IProductRepository) {
-        this.productRepository = productRepository;
+    constructor(
+        @inject('IProductRepository') private productRepository: IProductRepository
+    ) {
     }
 
-    getProducts(): Array<Product> {
-        return this.productRepository.getProducts();
+    async getProducts(): Promise<Array<Product>> {
+        return await this.productRepository.getProducts();
     }
 
-    getTotalPrice(): number {
-        const products = this.productRepository.getProducts();
+    async getTotalPrice(): Promise<number> {
+        const products = await this.productRepository.getProducts();
 
         return products.reduce((sum, product) => sum + product.getPrice() * product.getQuantity(), 0);
     }
 
-    findProduct(name: string): Product | undefined {
-        return this.productRepository.findProductByName(name);
+    async findProduct(name: string): Promise<Product | undefined> {
+        return await this.productRepository.findProductByName(name);
     }
 
-    addProduct(name: string, price: number, quantity: number): Product {
+    async addProduct(name: string, price: number, quantity: number): Promise<Product> {
         const newProduct = new Product(
             uuidv4(),
             name,
@@ -31,12 +32,12 @@ export class WarehouseService {
             quantity
         );
 
-        this.productRepository.addProduct(newProduct);
+        await this.productRepository.addProduct(newProduct);
 
         return newProduct;
     }
 
-    updateProduct(uuid: string, quantity: number): void {
-        this.productRepository.updateProduct(uuid, quantity);
+    async updateProduct(uuid: string, quantity: number): Promise<void> {
+        await this.productRepository.updateProduct(uuid, quantity);
     }
 }

@@ -5,9 +5,9 @@ import { FindProductPayload } from "../payloads/FindProductPayload";
 import { UpdateProductPayload } from "../payloads/UpdateProductPayload";
 
 export interface IWarehouseController {
-    addProduct(request: AddProductPayload): AxiosResponse<Product>;
-    updateProduct(request: UpdateProductPayload): AxiosResponse<void>;
-    getProducts(): AxiosResponse<Array<Product>>;
-    getTotalPrice(): AxiosResponse<number>;
-    findProduct(request: FindProductPayload): AxiosResponse<Product | undefined>;
+    addProduct(request: AddProductPayload): Promise<AxiosResponse<Product>>;
+    updateProduct(request: UpdateProductPayload): Promise<AxiosResponse<void>>;
+    getProducts(): Promise<AxiosResponse<Array<Product>>>;
+    getTotalPrice(): Promise<AxiosResponse<number>>;
+    findProduct(request: FindProductPayload): Promise<AxiosResponse<Product | undefined>>;
 }

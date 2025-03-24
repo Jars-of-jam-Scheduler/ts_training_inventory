@@ -5,7 +5,9 @@ import { IWarehouseController } from "./IWarehouseController";
 import { AddProductPayload } from "../payloads/AddProductPayload";
 import { UpdateProductPayload } from "../payloads/UpdateProductPayload";
 import { FindProductPayload } from "../payloads/FindProductPayload";
+import { injectable } from "tsyringe";
 
+@injectable()
 export class WarehouseController implements IWarehouseController {
     private warehouseService: WarehouseService;
 
@@ -13,8 +15,8 @@ export class WarehouseController implements IWarehouseController {
         this.warehouseService = warehouseService;
     }
 
-    addProduct(request: AddProductPayload): AxiosResponse<Product> {
-        const newProduct = this.warehouseService.addProduct(
+    async addProduct(request: AddProductPayload): Promise<AxiosResponse<Product>> {
+        const newProduct = await this.warehouseService.addProduct(
             request.name,
             request.price,
             request.quantity
@@ -31,8 +33,8 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    updateProduct(request: UpdateProductPayload): AxiosResponse<void> {
-        this.warehouseService.updateProduct(request.uuid, request.quantity);
+    async updateProduct(request: UpdateProductPayload): Promise<AxiosResponse<void>> {
+        await this.warehouseService.updateProduct(request.uuid, request.quantity);
 
         return {
             data: undefined,
@@ -45,8 +47,8 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    getProducts(): AxiosResponse<Array<Product>> {
-        const products = this.warehouseService.getProducts();
+    async getProducts(): Promise<AxiosResponse<Array<Product>>> {
+        const products = await this.warehouseService.getProducts();
 
         return {
             data: products,
@@ -59,8 +61,8 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    getTotalPrice(): AxiosResponse<number> {
-        const totalPrice = this.warehouseService.getTotalPrice();
+    async getTotalPrice(): Promise<AxiosResponse<number>> {
+        const totalPrice = await this.warehouseService.getTotalPrice();
 
         return {
             data: totalPrice,
@@ -73,8 +75,8 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    findProduct(request: FindProductPayload): AxiosResponse<Product | undefined> {
-        const product = this.warehouseService.findProduct(request.name);
+    async findProduct(request: FindProductPayload): Promise<AxiosResponse<Product | undefined>> {
+        const product = await this.warehouseService.findProduct(request.name);
 
         return {
             data: product,

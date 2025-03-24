@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2016",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "target": "ES2024",
     "module": "CommonJS",
     "outDir": "./dist",
     "rootDir": "./",

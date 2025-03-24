@@ -1,19 +1,21 @@
+import { injectable } from "tsyringe";
 import { Product } from "../models/Product";
 import { IProductRepository } from "./IProductRepository";
 
+@injectable()
 export class ProductRepository implements IProductRepository {
     private products: Array<Product> = [];
 
-    getProducts(): Array<Product> {
-        return this.products;
+    async getProducts(): Promise<Array<Product>> {
+        return await this.products;
     }
 
-    addProduct(product: Product): void {
-        this.products.push(product);
+    async addProduct(product: Product): Promise<void> {
+        await this.products.push(product);
     }
 
-    updateProduct(uuid: string, quantity: number): void {
-        const productToUpdate = this.products.find(p => p.getUuid() === uuid);
+    async updateProduct(uuid: string, quantity: number): Promise<void> {
+        const productToUpdate = await this.products.find(p => p.getUuid() === uuid);
         
         if (productToUpdate) {
             productToUpdate.setQuantity(quantity);
@@ -22,7 +24,7 @@ export class ProductRepository implements IProductRepository {
         }
     }
 
-    findProductByName(name: string): Product | undefined {
-        return this.products.find(p => p.getName() === name);
+    async findProductByName(name: string): Promise<Product | undefined> {
+        return await this.products.find(p => p.getName() === name);
     }
 }
