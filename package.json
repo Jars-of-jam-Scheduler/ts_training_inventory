@@ -12,11 +12,13 @@
     "@types/express": "^5.0.1",
     "@types/mongodb": "^4.0.6",
     "@types/mongoose": "^5.11.96",
+    "@types/nodemailer": "^6.4.17",
     "axios": "^1.8.4",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.15.0",
     "mongoose": "^8.12.2",
+    "nodemailer": "^6.10.0",
     "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.8.0",
     "uuid": "^11.1.0"

@@ -5,6 +5,7 @@ const ProductSchema: Schema = new Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
     quantity: { type: Number, required: true },
+    criticalQuantity: { type: Number, required: false, default: 5 },
 }, {
     timestamps: true,
 });

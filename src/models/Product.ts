@@ -6,12 +6,14 @@ export class Product {
     private name: string;
     private price: number;
     private quantity: number;
+    private criticalQuantity: number;
 
-    constructor(uuid: string, name: string, price: number, quantity: number, _id?: ObjectId) {
+    constructor(uuid: string, name: string, price: number, quantity: number, criticalQuantity: number, _id?: ObjectId) {
         this.uuid = uuid;
         this.name = name;
         this.price = price;
         this.quantity = quantity;
+        this.criticalQuantity = criticalQuantity;
         this._id = _id;
     }
 
@@ -25,6 +27,10 @@ export class Product {
 
     setQuantity(newQuantity: number): void {
         this.quantity = newQuantity;
+    }
+
+    setCriticalQuantity(newCriticalQuantity: number): void {
+        this.criticalQuantity = newCriticalQuantity;
     }
 
     getUuid(): string {
@@ -41,6 +47,10 @@ export class Product {
 
     getQuantity(): number {
         return this.quantity;
+    }
+
+    getCriticalQuantity(): number {
+        return this.criticalQuantity;
     }
 
     getId(): ObjectId | undefined {

@@ -2,11 +2,13 @@ import { Product } from "../models/Product";
 import { IProductRepository } from "../repositories/IProductRepository";
 import { v4 as uuidv4 } from 'uuid';
 import { inject, injectable } from "tsyringe";
+import { NotificationService } from "./NotificationService";
 
 @injectable()
 export class WarehouseService {
     constructor(
-        @inject('IProductRepository') private productRepository: IProductRepository
+        @inject('IProductRepository') private productRepository: IProductRepository,
+        private notificationService: NotificationService
     ) {
     }
 
@@ -24,12 +26,13 @@ export class WarehouseService {
         return await this.productRepository.findProductByName(name);
     }
 
-    async addProduct(name: string, price: number, quantity: number): Promise<Product> {
+    async addProduct(name: string, price: number, quantity: number, criticalQuantity: number = 5): Promise<Product> {
         const newProduct = new Product(
             uuidv4(),
             name,
             price,
-            quantity
+            quantity,
+            criticalQuantity
         );
 
         await this.productRepository.addProduct(newProduct);
@@ -37,7 +40,25 @@ export class WarehouseService {
         return newProduct;
     }
 
-    async updateProduct(uuid: string, quantity: number): Promise<void> {
-        await this.productRepository.updateProduct(uuid, quantity);
+    async updateProduct(
+        uuid: string,
+        name?: string,
+        price?: number,
+        quantity?: number,
+        criticalQuantity?: number
+    ): Promise<Product | undefined> {
+        const updatedProduct = await this.productRepository.updateProduct(
+            uuid,
+            name,
+            price,
+            quantity,
+            criticalQuantity
+        );
+        
+        if (updatedProduct && quantity && quantity <= updatedProduct.getCriticalQuantity()) {
+            await this.notificationService.sendLowStockEmail(updatedProduct);
+        }
+
+        return updatedProduct;
     }
 }

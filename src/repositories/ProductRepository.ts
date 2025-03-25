@@ -14,13 +14,37 @@ export class ProductRepository implements IProductRepository {
         await this.products.push(product);
     }
 
-    async updateProduct(uuid: string, quantity: number): Promise<void> {
+    async updateProduct(
+        uuid: string,
+        name?: string,
+        price?: number,
+        quantity?: number,
+        criticalQuantity?: number
+    ): Promise<Product | undefined> {
         const productToUpdate = await this.products.find(p => p.getUuid() === uuid);
-        
+
         if (productToUpdate) {
-            productToUpdate.setQuantity(quantity);
+            if (name) {
+                productToUpdate.setName(name);
+            }
+
+            if (price) {
+                productToUpdate.setPrice(price);
+            }
+
+            if (quantity) {
+                productToUpdate.setQuantity(quantity);
+            }
+
+            if (criticalQuantity) {
+                productToUpdate.setCriticalQuantity(criticalQuantity);
+            }
+
+            return productToUpdate;
         } else {
             console.warn(`Produit avec le UUID ${uuid} non trouvé pour la mise à jour.`);
+            
+            return undefined;
         }
     }
 

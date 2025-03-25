@@ -17,20 +17,19 @@ router.get('/products/total', async (_req: Request, res: Response) => {
 });
 
 router.get('/products/:name', async (req: Request, res: Response) => {
-    const requestPayload = { name: req.params.name };
-    const response = await warehouseController.findProduct(requestPayload);
+    const response = await warehouseController.findProduct({ name: req.params.name });
     res.status(response.status).json(response.data);
 });
 
 router.post('/products', async (req: Request, res: Response) => {
-    const payload = req.body;
-    const response = await warehouseController.addProduct(payload);
+    const response = await warehouseController.addProduct(req.body);
     res.status(response.status).json(response.data);
 });
 
 router.put('/products/:uuid', async (req: Request, res: Response) => {
-    const payload = { uuid: req.params.uuid, quantity: req.body.quantity };
-    const response = await warehouseController.updateProduct(payload);
+    const { uuid } = req.params;
+    const { name, price, quantity, criticalQuantity } = req.body;
+    const response = await warehouseController.updateProduct({ uuid, name, price, quantity, criticalQuantity });
     res.status(response.status).send();
 });
 

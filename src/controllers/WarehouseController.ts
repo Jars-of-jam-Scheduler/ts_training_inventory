@@ -33,18 +33,36 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    async updateProduct(request: UpdateProductPayload): Promise<AxiosResponse<void>> {
-        await this.warehouseService.updateProduct(request.uuid, request.quantity);
+    async updateProduct(request: UpdateProductPayload): Promise<AxiosResponse<Product | undefined>> {
+        const updatedProduct = await this.warehouseService.updateProduct(
+            request.uuid,
+            request.name,
+            request.price,
+            request.quantity,
+            request.criticalQuantity
+        );
 
-        return {
-            data: undefined,
-            status: 204,
-            statusText: 'No Content',
-            headers: {},
-            config: {
-                headers: new AxiosHeaders()
-            }
-        };
+        if (updatedProduct) {
+            return {
+                data: updatedProduct,
+                status: 200,
+                statusText: 'OK',
+                headers: {},
+                config: {
+                    headers: new AxiosHeaders()
+                }
+            };
+        } else {
+            return {
+                data: undefined,
+                status: 404,
+                statusText: 'Not Found',
+                headers: {},
+                config: {
+                    headers: new AxiosHeaders()
+                }
+            };
+        }
     }
 
     async getProducts(): Promise<AxiosResponse<Array<Product>>> {

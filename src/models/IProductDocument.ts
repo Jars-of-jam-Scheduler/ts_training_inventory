@@ -5,5 +5,6 @@ export interface IProductDocument extends Document {
     name: string;
     price: number;
     quantity: number;
+    criticalQuantity: number;
     _id: Types.ObjectId;
 };
