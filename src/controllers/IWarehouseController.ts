@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { Product } from '../models/Product'
 import { AddProductPayload } from "../payloads/AddProductPayload";
-import { FindProductPayload } from "../payloads/FindProductPayload";
+import { FindProductByNamePayload } from "../payloads/FindProductByNamePayload";
 import { UpdateProductPayload } from "../payloads/UpdateProductPayload";
 
 export interface IWarehouseController {
@@ -9,5 +9,5 @@ export interface IWarehouseController {
     updateProduct(request: UpdateProductPayload): Promise<AxiosResponse<Product | undefined>>;
     getProducts(): Promise<AxiosResponse<Array<Product>>>;
     getTotalPrice(): Promise<AxiosResponse<number>>;
-    findProduct(request: FindProductPayload): Promise<AxiosResponse<Product | undefined>>;
+    findProductByName(request: FindProductByNamePayload): Promise<AxiosResponse<Product | undefined>>;
 }

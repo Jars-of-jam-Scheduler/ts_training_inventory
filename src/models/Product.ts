@@ -1,14 +1,14 @@
 import { ObjectId } from "mongodb";
 
 export class Product {
-    private _id?: ObjectId;
-    private uuid: string;
-    private name: string;
-    private price: number;
-    private quantity: number;
-    private criticalQuantity: number;
-
-    constructor(uuid: string, name: string, price: number, quantity: number, criticalQuantity: number, _id?: ObjectId) {
+    constructor(
+        private uuid: string,
+        private name: string,
+        private price: number,
+        private quantity: number,
+        private criticalQuantity: number,
+        private _id?: ObjectId
+    ) {
         this.uuid = uuid;
         this.name = name;
         this.price = price;

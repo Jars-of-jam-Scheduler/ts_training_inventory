@@ -1,16 +1,16 @@
 import { injectable } from "tsyringe";
-import * as nodemailer from 'nodemailer';
+import nodemailer, { Transporter } from 'nodemailer';
 import { Product } from "../models/Product";
 
 @injectable()
 export class NotificationService {
-    private transporter: nodemailer.Transporter;
+    private transporter: Transporter;
     private adminEmail: string | undefined;
 
     constructor() {
         this.adminEmail = process.env.ADMIN_EMAIL;
         if (!this.adminEmail) {
-            console.warn("L'adresse e-mail de l'administrateur n'est pas configurée dans le fichier .env.");
+            throw new Error("L'adresse e-mail de l'administrateur n'est pas configurée dans le fichier .env.");
         }
 
         this.transporter = nodemailer.createTransport({
@@ -24,11 +24,6 @@ export class NotificationService {
     }
 
     async sendLowStockEmail(product: Product): Promise<void> {
-        if (!this.adminEmail) {
-            console.warn("Impossible d'envoyer l'e-mail : adresse de l'administrateur non configurée.");
-            return;
-        }
-
         const mailOptions = {
             from: process.env.EMAIL_USER,
             to: this.adminEmail,

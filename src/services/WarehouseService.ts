@@ -22,7 +22,7 @@ export class WarehouseService {
         return products.reduce((sum, product) => sum + product.getPrice() * product.getQuantity(), 0);
     }
 
-    async findProduct(name: string): Promise<Product | undefined> {
+    async findProductByName(name: string): Promise<Product | undefined> {
         return await this.productRepository.findProductByName(name);
     }
 

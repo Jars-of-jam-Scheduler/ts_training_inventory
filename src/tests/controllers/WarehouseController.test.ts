@@ -3,7 +3,7 @@ import { WarehouseService } from '../../services/WarehouseService';
 import { Product } from '../../models/Product';
 import { IProductRepository } from '../../repositories/IProductRepository';
 import { AddProductPayload } from '../../payloads/AddProductPayload';
-import { FindProductPayload } from '../../payloads/FindProductPayload';
+import { FindProductPayload } from '../../payloads/FindProductByNamePayload';
 import { UpdateProductPayload } from '../../payloads/UpdateProductPayload';
 
 const mockProductRepository: jest.Mocked<IProductRepository> = {

@@ -4,14 +4,12 @@ import { WarehouseService } from "../services/WarehouseService";
 import { IWarehouseController } from "./IWarehouseController";
 import { AddProductPayload } from "../payloads/AddProductPayload";
 import { UpdateProductPayload } from "../payloads/UpdateProductPayload";
-import { FindProductPayload } from "../payloads/FindProductPayload";
+import { FindProductByNamePayload } from "../payloads/FindProductByNamePayload";
 import { injectable } from "tsyringe";
 
 @injectable()
 export class WarehouseController implements IWarehouseController {
-    private warehouseService: WarehouseService;
-
-    constructor(warehouseService: WarehouseService) {
+    constructor(private warehouseService: WarehouseService) {
         this.warehouseService = warehouseService;
     }
 
@@ -93,8 +91,8 @@ export class WarehouseController implements IWarehouseController {
         };
     }
 
-    async findProduct(request: FindProductPayload): Promise<AxiosResponse<Product | undefined>> {
-        const product = await this.warehouseService.findProduct(request.name);
+    async findProductByName(request: FindProductByNamePayload): Promise<AxiosResponse<Product | undefined>> {
+        const product = await this.warehouseService.findProductByName(request.name);
 
         return {
             data: product,
